@@ -2,7 +2,6 @@ import random
 import numpy.linalg as l
 import copy
 from tables import *
-import math
 
 
 def cycle_printer(arr):
@@ -73,7 +72,7 @@ while True:
     for i in range(N):
         tmp = 0
         for num in range(m):
-            tmp+= (y[i][num] - y_regr[i])**2
+            tmp += (y[i][num] - y_regr[i]) ** 2
         D.append(tmp)
 
     print(D)
@@ -89,29 +88,29 @@ while True:
         break
     else:
         print("Дисперсія неоднорідна (Gp > Gt), збільшуємо m, повторюємо операції")
-        m+=1
+        m += 1
 
 Sb = sum(D) / N
 Sbs = Sb / (N * m)
 
-beta = [(y_regr[0] + y_regr[1] + y_regr[2] + y_regr[3] + y_regr[4] + y_regr[5] + y_regr[6] + y_regr[7])/N,
-    (-y_regr[0] - y_regr[1] - y_regr[2] - y_regr[3] + y_regr[4] + y_regr[5] + y_regr[6] + y_regr[7])/N,
-    (-y_regr[0] - y_regr[1] + y_regr[2] + y_regr[3] - y_regr[4] - y_regr[5] + y_regr[6] + y_regr[7])/N,
-    (-y_regr[0] + y_regr[1] - y_regr[2] + y_regr[3] - y_regr[4] + y_regr[5] - y_regr[6] + y_regr[7])/N,
-    (y_regr[0] + y_regr[1] - y_regr[2] - y_regr[3] - y_regr[4] - y_regr[5] + y_regr[6] + y_regr[7])/N,
-    (y_regr[0] - y_regr[1] + y_regr[2] - y_regr[3] - y_regr[4] + y_regr[5] - y_regr[6] + y_regr[7])/N,
-    (y_regr[0] - y_regr[1] - y_regr[2] + y_regr[3] + y_regr[4] - y_regr[5] - y_regr[6] + y_regr[7])/N,
-    (-y_regr[0] + y_regr[1] + y_regr[2] - y_regr[3] + y_regr[4] - y_regr[5] - y_regr[6] + y_regr[7])/N]
+beta = [(y_regr[0] + y_regr[1] + y_regr[2] + y_regr[3] + y_regr[4] + y_regr[5] + y_regr[6] + y_regr[7]) / N,
+        (-y_regr[0] - y_regr[1] - y_regr[2] - y_regr[3] + y_regr[4] + y_regr[5] + y_regr[6] + y_regr[7]) / N,
+        (-y_regr[0] - y_regr[1] + y_regr[2] + y_regr[3] - y_regr[4] - y_regr[5] + y_regr[6] + y_regr[7]) / N,
+        (-y_regr[0] + y_regr[1] - y_regr[2] + y_regr[3] - y_regr[4] + y_regr[5] - y_regr[6] + y_regr[7]) / N,
+        (y_regr[0] + y_regr[1] - y_regr[2] - y_regr[3] - y_regr[4] - y_regr[5] + y_regr[6] + y_regr[7]) / N,
+        (y_regr[0] - y_regr[1] + y_regr[2] - y_regr[3] - y_regr[4] + y_regr[5] - y_regr[6] + y_regr[7]) / N,
+        (y_regr[0] - y_regr[1] - y_regr[2] + y_regr[3] + y_regr[4] - y_regr[5] - y_regr[6] + y_regr[7]) / N,
+        (-y_regr[0] + y_regr[1] + y_regr[2] - y_regr[3] + y_regr[4] - y_regr[5] - y_regr[6] + y_regr[7]) / N]
 
-t = [abs(i)/Sbs for i in beta]
+t = [abs(i) / Sbs for i in beta]
 
-t_kr = t_table[f3-1]
+t_kr = t_table[f3 - 1]
 
 print(t_kr)
 print(t)
 
-t_final = list(filter(lambda x: x>t_kr, t))
-f4 = N-len(t_final)
+t_final = list(filter(lambda x: x > t_kr, t))
+f4 = N - len(t_final)
 print(f"\nЗначимі коефіцієнти: ")
 cycle_printer(t_final)
 print("\n")
@@ -119,16 +118,15 @@ print(t)
 print(t_final)
 print(beta)
 
-
 fisher_sum = 0
 for i in range(N):
-      fisher_sum += pow((t[i] - y_regr[i]), 2)
-D_ad = (m/(f4))*fisher_sum
-Fp = D_ad/Sb
+    fisher_sum += pow((t[i] - y_regr[i]), 2)
+D_ad = (m / (f4)) * fisher_sum
+Fp = D_ad / Sb
 print(f"Fp = {Fp}")
-Ft = F_table[f3-1][f4-1]
+Ft = F_table[f3 - 1][f4 - 1]
 print(f"Ft = {Ft}")
 if Ft > Fp:
-      print(f"Ft > Fp\nРівняння регресії адекватно оригіналу при рівні значимості {q}")
+    print(f"Ft > Fp\nРівняння регресії адекватно оригіналу при рівні значимості {q}")
 else:
-      print(f"Ft < Fp\nРівняння регресії неадекватно оригіналу при рівні значимості {q}")
+    print(f"Ft < Fp\nРівняння регресії неадекватно оригіналу при рівні значимості {q}")
